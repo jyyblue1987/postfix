@@ -170,6 +170,9 @@ class Calculator:
                     if num.find('.') < 0 :
                         num = num + '.0'
                     postStack.push(num)
+                elif num == '' and c == '-':    # support negation
+                    num = num + c
+                    continue    
                 elif len(num) > 0 :
                     return None   
 
@@ -246,9 +249,6 @@ class Calculator:
             return None    
 
         # ' 2 5' is an invalid expression        
-        if txt[0] in '-' :
-            txt = '0' + txt
-
         operator = '+-*/^'
         num = ''
         count = 0
@@ -260,6 +260,9 @@ class Calculator:
                 num = num.strip()
                 if len(num) > 0 and self.isNumber(num) == False :
                     return None
+                elif num == '' and c == '-':    # support negation
+                    num = num + c
+                    continue
                 elif len(num) > 0 and self.isNumber(num) == True:
                     count = count + 1    
                     number_count = number_count + 1
@@ -359,10 +362,14 @@ class Calculator:
         if txt == None :
             return None
         
+        txt = txt.split(" ")
+
         num = ''
         operator = '+-*/^'
         for c in txt :
-            if c in operator :
+            if self.isNumber(c) :
+                calcStack.push(float(c))
+            else :                
                 y = calcStack.pop().value
                 x = calcStack.pop().value
                 if c == '+' :
@@ -380,16 +387,6 @@ class Calculator:
                     val = x ** y            
 
                 calcStack.push(val)
-
-            elif c in '0123456789.' :
-                # If the scanned character is an  
-                # operand, add it to output. 
-                num = num + c                
-            elif c == ' ' :
-                if len(num) > 0 :
-                    calcStack.push(float(num))
-                num = ''
-
         
         val = calcStack.pop().value
 
