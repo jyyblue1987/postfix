@@ -165,6 +165,10 @@ class Calculator:
             if c in '+-*/^()' :
                 # push number string to stack
                 num = num.strip()
+
+                if num.find('.') < 0 :
+                    num = num + '.0'
+
                 if len(num) > 0 and self.isNumber(num) :
                     postStack.push(num)
                 elif len(num) > 0 :
@@ -203,6 +207,9 @@ class Calculator:
 
         # last number
         num = num.strip()
+        if num.find('.') < 0 :
+            num = num + '.0'
+
         if len(num) > 0 and self.isNumber(num) :
             postStack.push(num)
         elif len(num) > 0 :

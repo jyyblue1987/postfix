@@ -2,6 +2,7 @@ from HW3 import Calculator
 
 x = Calculator()
 
+
 print('------- Postfix Test Case --------------')
 print(x.postfix(' 2 ^        4'))
 #'2.0 4.0 ^'
