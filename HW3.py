@@ -222,7 +222,7 @@ class Calculator:
         return output    
 
     def checkValidate(self, txt) :
-        #contains not supported operator
+        # contains not supported operator
         for c in txt :
             if (c in '01234567890. +-*/^()') == False:
                 return None     
@@ -250,13 +250,18 @@ class Calculator:
                     return None
                 elif len(num) > 0 and self.isNumber(num) == True:
                     count = count + 1    
-   
+
+                # '3(5)' is an invalid expression
+                if c == '(' and len(num) > 0 :    
+                    return None
+
                 num = ''
                 if c in operator :
                     count = count - 1
 
+                # Contains two consecutive operators
                 if count < 0 :
-                    return None    
+                    return None   
 
             elif c in '0123456789. ' :
                 # If the scanned character is an  
@@ -373,5 +378,5 @@ class Calculator:
         
 
 x = Calculator()
-x.expr = ' 2 * 2'
+x.expr = '3*(5)'
 print(x.calculate)
