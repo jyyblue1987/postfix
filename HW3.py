@@ -211,7 +211,14 @@ class Calculator:
         while charStack.isEmpty() == False :                        
             postStack.push(charStack.pop().value)    
 
-        return postStack    
+        output = ''
+
+        while postStack.isEmpty() == False :
+            output = postStack.pop().value + ' ' + output    
+
+        output = output.strip()    
+
+        return output    
         
     @property
     def calculate(self):
@@ -267,12 +274,49 @@ class Calculator:
             print("Argument error in calculate")
             return None
 
-        calcStack=Stack()
+        calcStack = Stack()
 
         # YOUR CODE STARTS HERE
+        txt = self.postfix(self.expr)
+        
+        num = ''
+        operator = '+-*/^'
+        for c in txt :
+            if c in operator :
+                y = calcStack.pop().value
+                x = calcStack.pop().value
+                if c == '+' :
+                    val = x + y
+                if c == '-' :
+                    val = x - y    
+                if c == '*' :
+                    val = x * y    
+                if c == '/' :
+                    if y == 0 :
+                        return None
+                    else :   
+                        val = x / y
+                if c == '^' :
+                    val = x ^ y            
 
+                calcStack.push(val)
 
+            elif c in '0123456789.' :
+                # If the scanned character is an  
+                # operand, add it to output. 
+                num = num + c                
+            elif c == ' ' :
+                if len(num) > 0 :
+                    calcStack.push(float(num))
+                num = ''
+
+        
+        val = calcStack.pop().value
+
+        return val
+
+        
 
 x = Calculator()
-postStack =  x.postfix('1+2*3+(4+2)/2')
-print(postStack)
+x.expr = '    4  +      3 -2'
+print(x.calculate)
