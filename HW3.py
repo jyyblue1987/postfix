@@ -102,7 +102,10 @@ class Calculator:
 
     def isNumber(self, txt):
         # YOUR CODE STARTS HERE
-        flag = True
+        flag = True       
+        if len(txt) > 0 and txt[0] == '-' :
+            txt = txt[1:]
+            txt = '-' + txt.strip() 
         try:            
             float(txt)
         except ValueError:
