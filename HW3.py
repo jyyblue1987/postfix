@@ -162,9 +162,9 @@ class Calculator:
         charStack = Stack()
 
         num = ''
-        operator = '+-*/^()'
+        operator = '+-*/^'
         for c in txt :
-            if c in operator :
+            if c in '+-*/^()' :
                 # push number string to stack
                 num = num.strip()
                 if len(num) > 0 and self.isNumber(num) :
@@ -175,8 +175,8 @@ class Calculator:
                 num = ''
 
                 # operator
-                if c in operator :
-                    while charStack.isEmpty() == False and operator.find(c) <= operator.find(charStack.top.value):                                                
+                if c in operator :                    
+                    while charStack.isEmpty() == False and operator.find(c) <= operator.find(charStack.top.value) and charStack.top.value != '(':                                                
                         postStack.push(charStack.pop().value)
 
                     # Push current Operator on stack    
