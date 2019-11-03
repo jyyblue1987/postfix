@@ -71,7 +71,7 @@ class Stack:
     def push(self,value):
         if value == None :
             return
-            
+
         # YOUR CODE STARTS HERE
         x = Node(value)
         x.next = self.top
@@ -153,6 +153,10 @@ class Calculator:
 
         postStack = Stack()
         # YOUR CODE STARTS HERE
+        txt = self.checkValidate(txt)
+        if txt == None :
+            return None
+
         charStack = Stack()
 
         num = ''
@@ -170,6 +174,7 @@ class Calculator:
 
                 # operator
                 if c in operator :                    
+                    # consider operator priority
                     while charStack.isEmpty() == False and operator.find(c) <= operator.find(charStack.top.value) and charStack.top.value != '(':                                                
                         postStack.push(charStack.pop().value)
 
@@ -215,7 +220,49 @@ class Calculator:
         output = output.strip()    
 
         return output    
-        
+
+    def checkValidate(self, txt) :
+        #contains not supported operator
+        for c in txt :
+            if (c in '01234567890. +-*/^()') == False:
+                return None     
+
+        # Has unbalanced parentheses
+        count = 0
+        for c in txt :
+            if c == '(' :
+                count = count + 1
+            if c == ')' :
+                count = count - 1
+
+            if count < 0 :
+                return None    
+
+        # ' 2 5' is an invalid expression
+        operator = '+-*/^'
+        num = ''
+        for c in txt :
+            if c in '+-*/^()' :
+                # push number string to stack
+                num = num.strip()
+                if len(num) > 0 and self.isNumber(num) == False :
+                    return None
+                num = ''
+
+            elif c in '0123456789. ' :
+                # If the scanned character is an  
+                # operand, add it to output. 
+                num = num + c                
+            else :
+                return None;
+
+        # last number
+        num = num.strip()
+        if len(num) > 0 and self.isNumber(num) == False :
+            return None            
+
+        return txt
+
     @property
     def calculate(self):
         '''
@@ -317,5 +364,5 @@ class Calculator:
         
 
 x = Calculator()
-x.expr = '2 *    5   +   3    ^ -2       +1  +4'
+x.expr = ' 2  5 * 2'
 print(x.calculate)
