@@ -182,8 +182,6 @@ class Calculator:
                 elif len(num) > 0 :
                     return None   
 
-                num = ''
-
                 # operator
                 if c in operator :                    
                     # consider operator priority
@@ -195,6 +193,14 @@ class Calculator:
                 elif c == '(' :
                     # If the scanned character is an 
                     # ‘(‘, push it to the stack. 
+
+                    # '3(5)' is an invalid expression => 3 * (5)
+                    if len(num) > 0 :    
+                        while charStack.isEmpty() == False and operator.find('*') <= operator.find(charStack.top.value) and charStack.top.value != '(':                                                
+                            postStack.push(charStack.pop().value)
+
+                        charStack.push('*')
+
                     charStack.push(c)
                 elif c == ')' :
                     # If the scanned character is an 
@@ -205,6 +211,8 @@ class Calculator:
                         
                     # Remove '(' from the stack 
                     charStack.pop()
+
+                num = ''    
 
                 lifoStack.push(c)
             elif c in '0123456789. ' :
@@ -280,7 +288,7 @@ class Calculator:
 
                 # '3(5)' is an invalid expression
                 if c == '(' and len(num) > 0 :    
-                    return None
+                    operator_count = operator_count + 1
 
                 num = ''
                 if c in operator :

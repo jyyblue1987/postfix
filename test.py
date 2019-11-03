@@ -87,3 +87,4 @@ print(x.calculate)
 # print(x.calculate)
 
 # print(x.postfix('-2 + (2+3)'))
+# print(x.postfix('3(5)'))
