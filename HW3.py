@@ -62,7 +62,7 @@ class Stack:
 
     def isEmpty(self):
         # YOUR CODE STARTS HERE
-        return self.count > 0
+        return self.count == 0
 
     def __len__(self): 
         # YOUR CODE STARTS HERE
@@ -108,7 +108,6 @@ class Calculator:
 
         return flag    
 
-
     def postfix(self, txt):
         '''
             Required: postfix must create and use a Stack for expression processing
@@ -153,10 +152,20 @@ class Calculator:
         postStack = Stack()
         # YOUR CODE STARTS HERE
 
+        
+# 1. 수자가 나오면 그대로 출력한다.
+# 2. (나오면 스택에 push한다.
+# 3. * / 나오면 스택에 push한다.
+# 4. + - 연산이 나오면 여는 괄호('('), 여는 괄호가 없다면 스택의 끝까지 출력하고 그 연산자를 스택에 push한다.
+# 5. 닫는 괄호(')')가 나오면 여는 괄호('(')가 나올때까지 pop하여 출력한다.
+
+        charStack = Stack()
+
         num = ''
+        operator = '+-*/^()'
         for c in txt :
-            if c in '+-*/^()' :
-                # operator
+            if c in operator :
+                # push number string to stack
                 num = num.strip()
                 if len(num) > 0 and self.isNumber(num) :
                     postStack.push(num)
@@ -164,8 +173,32 @@ class Calculator:
                     return None   
 
                 num = ''
+
+                # operator
+                if c in operator :
+                    while charStack.isEmpty() == False and operator.find(c) <= operator.find(charStack.top.value):                                                
+                        postStack.push(charStack.pop().value)
+
+                    # Push current Operator on stack    
+                    charStack.push(c)
+                elif c == '(' :
+                    # If the scanned character is an 
+                    # ‘(‘, push it to the stack. 
+                    charStack.push(c)
+                elif c == ')' :
+                    # If the scanned character is an 
+                    # ‘)’, pop and output from the stack  
+                    # until an ‘(‘ is encountered.     
+                    while charStack.top.value != '(' :                        
+                        postStack.push(charStack.pop().value)
+                        
+                    # Remove '(' from the stack 
+                    charStack.pop()
+                
             elif c in '0123456789. ' :
-                num = num + c
+                # If the scanned character is an  
+                # operand, add it to output. 
+                num = num + c                
             else :
                 return None;
 
@@ -174,6 +207,9 @@ class Calculator:
             postStack.push(num)
         elif len(num) > 0 :
             return None    
+
+        while charStack.isEmpty() == False :                        
+            postStack.push(charStack.pop().value)    
 
         return postStack    
         
@@ -238,5 +274,5 @@ class Calculator:
 
 
 x = Calculator()
-postStack =  x.postfix('2.1*5+3^2+1+4.45')
+postStack =  x.postfix('1+2*3+(4+2)/2')
 print(postStack)
