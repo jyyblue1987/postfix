@@ -297,7 +297,7 @@ class Calculator:
                     else :   
                         val = x / y
                 if c == '^' :
-                    val = x ^ y            
+                    val = x ** y            
 
                 calcStack.push(val)
 
@@ -318,5 +318,5 @@ class Calculator:
         
 
 x = Calculator()
-x.expr = '    4  +      3 -2'
+x.expr = '2.5 + 3 * ( 2 +(3.0) *(5^2 - 2*3^(2) ) *(4) ) * ( 2 /8 + 2*( 3 - 1/ 3) ) - 2/ 3^2'
 print(x.calculate)
