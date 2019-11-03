@@ -260,8 +260,9 @@ class Calculator:
 
                 num = ''
                 if c in operator :
-                    count = count - 1
-                    operator_count = operator_count + 1
+                    if number_count > 0 :
+                        count = count - 1
+                        operator_count = operator_count + 1
 
                 # Contains two consecutive operators
                 if count < 0 :
@@ -403,10 +404,20 @@ print(x.postfix('(2.5)'))
 print(x.postfix ('((2))'))
 # '2.0'
 print(x.postfix ('     -2 *  ((  5   +   3)    ^ 2+(1  +4))    '))
-# '-2.0 5.0 3.0 + 2.0 ^ 1.0 4.0 + + *'
+'-2.0 5.0 3.0 + 2.0 ^ 1.0 4.0 + + *'
 print(x.postfix ('  (   2 *  ((  5   +   3)    ^ 2+(1  +4)))    '))
 # '2.0 5.0 3.0 + 2.0 ^ 1.0 4.0 + + *'
 print(x.postfix ('  ((   2 *  ((  5   +   3)    ^ 2+(1  +4))))    '))
 # '2.0 5.0 3.0 + 2.0 ^ 1.0 4.0 + + *'
 print(x.postfix('   2 *  (  5   +   3)    ^ 2+(1  +4)    '))
 # '2.0 5.0 3.0 + 2.0 ^ * 1.0 4.0 + +'
+print(x.postfix('2 *    5   +   3    ^ -2       +1  +4'))
+# 'error message'
+print(x.postfix('2    5'))
+# 'error message'
+print(x.postfix('25 +'))
+# 'error message'
+print(x.postfix('   2 *  (  5   +   3)    ^ 2+(1  +4    '))
+# 'error message'
+print(x.postfix('2*(5 +3)^ 2+)1  +4(    '))
+# 'error message'
