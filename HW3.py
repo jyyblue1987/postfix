@@ -239,11 +239,11 @@ class Calculator:
         if count != 0 :
             return None    
 
-        # ' 2 5' is an invalid expression
-        operator = '+-*/^'
-        if txt[0] in operator :
+        # ' 2 5' is an invalid expression        
+        if txt[0] in '-' :
             txt = '0' + txt
 
+        operator = '+-*/^'
         num = ''
         count = 0
         operator_count = 0
