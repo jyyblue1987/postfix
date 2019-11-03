@@ -166,10 +166,9 @@ class Calculator:
                 # push number string to stack
                 num = num.strip()
 
-                if num.find('.') < 0 :
-                    num = num + '.0'
-
                 if len(num) > 0 and self.isNumber(num) :
+                    if num.find('.') < 0 :
+                        num = num + '.0'
                     postStack.push(num)
                 elif len(num) > 0 :
                     return None   
@@ -207,10 +206,10 @@ class Calculator:
 
         # last number
         num = num.strip()
-        if num.find('.') < 0 :
-            num = num + '.0'
-
+        
         if len(num) > 0 and self.isNumber(num) :
+            if num.find('.') < 0 :
+                num = num + '.0'
             postStack.push(num)
         elif len(num) > 0 :
             return None    

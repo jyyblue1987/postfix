@@ -80,3 +80,5 @@ print(x.calculate)
 x.expr=')2(*10 - 3*(2 - 3*2) '
 print(x.calculate)
 # 'error message'
+
+print(x.postfix(' 2 * 5 + 3 ^ (0-2)+1 +4 '))
