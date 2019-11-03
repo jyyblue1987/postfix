@@ -69,6 +69,9 @@ class Stack:
         return self.count
 
     def push(self,value):
+        if value == None :
+            return
+            
         # YOUR CODE STARTS HERE
         x = Node(value)
         x.next = self.top
@@ -80,10 +83,9 @@ class Stack:
         x = self.top;
         if x != None :
             self.top = x.next
+            self.count = self.count - 1
         else :
             self.top = None
-
-        self.count = self.count - 1
 
         return x
 
@@ -151,14 +153,6 @@ class Calculator:
 
         postStack = Stack()
         # YOUR CODE STARTS HERE
-
-        
-# 1. 수자가 나오면 그대로 출력한다.
-# 2. (나오면 스택에 push한다.
-# 3. * / 나오면 스택에 push한다.
-# 4. + - 연산이 나오면 여는 괄호('('), 여는 괄호가 없다면 스택의 끝까지 출력하고 그 연산자를 스택에 push한다.
-# 5. 닫는 괄호(')')가 나오면 여는 괄호('(')가 나올때까지 pop하여 출력한다.
-
         charStack = Stack()
 
         num = ''
@@ -202,12 +196,14 @@ class Calculator:
             else :
                 return None;
 
+        # last number
         num = num.strip()
         if len(num) > 0 and self.isNumber(num) :
             postStack.push(num)
         elif len(num) > 0 :
             return None    
 
+        # push remain operator
         while charStack.isEmpty() == False :                        
             postStack.push(charStack.pop().value)    
 
@@ -278,6 +274,9 @@ class Calculator:
 
         # YOUR CODE STARTS HERE
         txt = self.postfix(self.expr)
+
+        if txt == None :
+            return None
         
         num = ''
         operator = '+-*/^'
@@ -318,5 +317,5 @@ class Calculator:
         
 
 x = Calculator()
-x.expr = '2.5 + 3 * ( 2 +(3.0) *(5^2 - 2*3^(2) ) *(4) ) * ( 2 /8 + 2*( 3 - 1/ 3) ) - 2/ 3^2'
+x.expr = '2 *    5   +   3    ^ -2       +1  +4'
 print(x.calculate)
