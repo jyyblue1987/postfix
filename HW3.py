@@ -227,6 +227,7 @@ class Calculator:
             if (c in '01234567890. +-*/^()') == False:
                 return None     
 
+        txt = txt.strip()
         # Has unbalanced parentheses
         count = 0
         for c in txt :
@@ -240,6 +241,9 @@ class Calculator:
 
         # ' 2 5' is an invalid expression
         operator = '+-*/^'
+        if txt[0] in operator :
+            txt = '0' + txt
+
         num = ''
         count = 0
         operator_count = 0
@@ -260,9 +264,8 @@ class Calculator:
 
                 num = ''
                 if c in operator :
-                    if number_count > 0 :
-                        count = count - 1
-                        operator_count = operator_count + 1
+                    count = count - 1
+                    operator_count = operator_count + 1
 
                 # Contains two consecutive operators
                 if count < 0 :
