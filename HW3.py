@@ -241,13 +241,22 @@ class Calculator:
         # ' 2 5' is an invalid expression
         operator = '+-*/^'
         num = ''
+        count = 0
         for c in txt :
             if c in '+-*/^()' :
                 # push number string to stack
                 num = num.strip()
                 if len(num) > 0 and self.isNumber(num) == False :
                     return None
+                elif len(num) > 0 and self.isNumber(num) == True:
+                    count = count + 1    
+   
                 num = ''
+                if c in operator :
+                    count = count - 1
+
+                if count < 0 :
+                    return None    
 
             elif c in '0123456789. ' :
                 # If the scanned character is an  
@@ -364,5 +373,5 @@ class Calculator:
         
 
 x = Calculator()
-x.expr = ' 2  5 * 2'
+x.expr = ' 2 * 2'
 print(x.calculate)
