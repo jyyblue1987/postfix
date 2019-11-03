@@ -79,9 +79,11 @@ print(x.calculate)
 # 'error message'
 x.expr=')2(*10 - 3*(2 - 3*2) '
 print(x.calculate)
-# 'error message'
+'error message'
 
 # print(x.postfix(' 2 * 5 + 3 ^ -2  +1 +4 '))
 
 # x.expr = '2 + 3 * ( -2 +(-3) *(5^2 - 2*3^(-2) ) *(-4) ) * ( 2 /8 + 2*( 3 -1/ 3) ) - 2/ 3^2'
 # print(x.calculate)
+
+# print(x.postfix('-2 + (2+3)'))

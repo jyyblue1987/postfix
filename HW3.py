@@ -161,6 +161,7 @@ class Calculator:
             return None
 
         charStack = Stack()
+        lifoStack = Stack()
 
         num = ''
         operator = '+-*/^'
@@ -173,9 +174,11 @@ class Calculator:
                     if num.find('.') < 0 :
                         num = num + '.0'
                     postStack.push(num)
+                    lifoStack.push(num)
                 elif num == '' and c == '-':    # support negation
-                    num = num + c
-                    continue    
+                    if lifoStack.isEmpty() or '+-*/^('.find(lifoStack.top.value) >= 0 :
+                        num = num + c                        
+                        continue
                 elif len(num) > 0 :
                     return None   
 
@@ -202,7 +205,8 @@ class Calculator:
                         
                     # Remove '(' from the stack 
                     charStack.pop()
-                
+
+                lifoStack.push(c)
             elif c in '0123456789. ' :
                 # If the scanned character is an  
                 # operand, add it to output. 
@@ -239,6 +243,8 @@ class Calculator:
             if (c in '01234567890. +-*/^()') == False:
                 return None     
 
+        charStack = Stack() 
+
         txt = txt.strip()
         # Has unbalanced parentheses
         count = 0
@@ -264,11 +270,13 @@ class Calculator:
                 if len(num) > 0 and self.isNumber(num) == False :
                     return None
                 elif num == '' and c == '-':    # support negation
-                    num = num + c
-                    continue
-                elif len(num) > 0 and self.isNumber(num) == True:
+                    if charStack.isEmpty() or '+-*/^('.find(charStack.top.value) >= 0 :
+                        num = num + c
+                        continue
+                elif len(num) > 0 and self.isNumber(num) == True:                    
                     count = count + 1    
                     number_count = number_count + 1
+                    charStack.push(num)
 
                 # '3(5)' is an invalid expression
                 if c == '(' and len(num) > 0 :    
@@ -278,6 +286,8 @@ class Calculator:
                 if c in operator :
                     count = count - 1
                     operator_count = operator_count + 1
+
+                charStack.push(c)
 
                 # Contains two consecutive operators
                 if count < 0 :
