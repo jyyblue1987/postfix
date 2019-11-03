@@ -100,7 +100,13 @@ class Calculator:
 
     def isNumber(self, txt):
         # YOUR CODE STARTS HERE
-        return True
+        flag = True
+        try:            
+            float(txt)
+        except ValueError:
+            flag = False
+
+        return flag    
 
 
     def postfix(self, txt):
@@ -144,11 +150,33 @@ class Calculator:
             print("Argument error in postfix")
             return None
 
-        postStack=Stack()
+        postStack = Stack()
         # YOUR CODE STARTS HERE
+
+        num = ''
+        for c in txt :
+            if c in '+-*/^()' :
+                # operator
+                num = num.strip()
+                if len(num) > 0 and self.isNumber(num) :
+                    postStack.push(num)
+                elif len(num) > 0 :
+                    return None   
+
+                num = ''
+            elif c in '0123456789. ' :
+                num = num + c
+            else :
+                return None;
+
+        num = num.strip()
+        if len(num) > 0 and self.isNumber(num) :
+            postStack.push(num)
+        elif len(num) > 0 :
+            return None    
+
+        return postStack    
         
-
-
     @property
     def calculate(self):
         '''
@@ -209,9 +237,6 @@ class Calculator:
 
 
 
-x = Stack()
-x.pop()
-x.push(2)
-x.push(4)
-x.push(6)
-print(x)
+x = Calculator()
+postStack =  x.postfix('2.1*5+3^2+1+4.45')
+print(postStack)
