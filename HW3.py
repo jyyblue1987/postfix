@@ -89,9 +89,7 @@ class Stack:
 
     def peek(self):
         # YOUR CODE STARTS HERE
-        return 
-
-
+        return self.top
 
 #=============================================== Part II ==============================================
 
@@ -102,7 +100,7 @@ class Calculator:
 
     def isNumber(self, txt):
         # YOUR CODE STARTS HERE
-
+        return True
 
 
     def postfix(self, txt):
@@ -208,3 +206,12 @@ class Calculator:
         calcStack=Stack()
 
         # YOUR CODE STARTS HERE
+
+
+
+x = Stack()
+x.pop()
+x.push(2)
+x.push(4)
+x.push(6)
+print(x)
