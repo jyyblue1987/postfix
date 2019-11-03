@@ -235,13 +235,15 @@ class Calculator:
             if c == ')' :
                 count = count - 1
 
-            if count < 0 :
-                return None    
+        if count != 0 :
+            return None    
 
         # ' 2 5' is an invalid expression
         operator = '+-*/^'
         num = ''
         count = 0
+        operator_count = 0
+        number_count = 0
         for c in txt :
             if c in '+-*/^()' :
                 # push number string to stack
@@ -250,6 +252,7 @@ class Calculator:
                     return None
                 elif len(num) > 0 and self.isNumber(num) == True:
                     count = count + 1    
+                    number_count = number_count + 1
 
                 # '3(5)' is an invalid expression
                 if c == '(' and len(num) > 0 :    
@@ -258,6 +261,7 @@ class Calculator:
                 num = ''
                 if c in operator :
                     count = count - 1
+                    operator_count = operator_count + 1
 
                 # Contains two consecutive operators
                 if count < 0 :
@@ -274,6 +278,12 @@ class Calculator:
         num = num.strip()
         if len(num) > 0 and self.isNumber(num) == False :
             return None            
+
+        if len(num) > 0 and self.isNumber(num) == True:
+            number_count = number_count + 1
+
+        if number_count != operator_count + 1 :
+            return None
 
         return txt
 
@@ -378,5 +388,11 @@ class Calculator:
         
 
 x = Calculator()
-x.expr = '3*(5)'
+# >>> x.postfix('2 *    5   +   3    ^ -2       +1  +4')
+# >>> x.postfix('2    5')
+# >>> x.postfix('25 +')
+# >>> x.postfix('   2 *  (  5   +   3)    ^ 2+(1  +4    ')
+# >>> x.postfix('2*(5 +3)^ 2+)1  +4(    ')
+
+x.expr = '2*(5 +3)^ 2+)1  +4(    '
 print(x.calculate)
